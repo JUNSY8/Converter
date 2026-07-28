@@ -341,13 +341,20 @@ class SongDownloaderApp(ctk.CTk):
 
 
 def main() -> None:
-    app = SongDownloaderApp()
-    app.withdraw()
-    if not prompt_terms_if_needed(app):
-        app.destroy()
-        return
-    app.deiconify()
-    app.mainloop()
+    try:
+        app = SongDownloaderApp()
+        app.update_idletasks()
+        if not prompt_terms_if_needed(app):
+            app.destroy()
+            return
+        app.lift()
+        app.focus_force()
+        app.mainloop()
+    except Exception as exc:  # noqa: BLE001 - show startup failures to the user
+        try:
+            messagebox.showerror("Error al iniciar", str(exc))
+        except Exception:
+            raise SystemExit(str(exc)) from exc
 
 
 if __name__ == "__main__":

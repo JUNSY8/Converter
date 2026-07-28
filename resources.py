@@ -20,10 +20,16 @@ def apply_window_icon(window: ctk.CTk | ctk.CTkToplevel) -> None:
     ico = resource_path("assets", "icon.ico")
     if not ico.is_file():
         return
-    try:
-        window.iconbitmap(default=str(ico))
-    except Exception:
+    path = str(ico.resolve())
+
+    def _set() -> None:
         try:
-            window.iconbitmap(str(ico))
+            window.iconbitmap(path)
         except Exception:
             pass
+
+    # Defer so the window handle exists on Windows before setting the icon.
+    try:
+        window.after(10, _set)
+    except Exception:
+        _set()

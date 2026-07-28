@@ -67,6 +67,9 @@ class TermsDialog(ctk.CTkToplevel):
         apply_window_icon(self)
 
         self.transient(master)
+        self.attributes("-topmost", True)
+        self.lift()
+        self.focus_force()
         self.grab_set()
         self.protocol("WM_DELETE_WINDOW", self._decline)
 
