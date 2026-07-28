@@ -9,7 +9,7 @@ if not exist vendor\ffmpeg\ffmpeg.exe (
 )
 
 python -m PyInstaller --noconfirm --clean --onefile --windowed ^
-  --name DescargadorCanciones ^
+  --name LuthierMusic ^
   --icon assets\icon.ico ^
   --add-data assets\icon.ico;assets ^
   --add-data assets\icon.png;assets ^
@@ -20,4 +20,4 @@ python -m PyInstaller --noconfirm --clean --onefile --windowed ^
   app.py
 
 echo.
-echo Listo: dist\DescargadorCanciones.exe
+echo Listo: dist\LuthierMusic.exe

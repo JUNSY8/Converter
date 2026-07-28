@@ -25,7 +25,7 @@ ctk.set_default_color_theme("blue")
 class SongDownloaderApp(ctk.CTk):
     def __init__(self) -> None:
         super().__init__()
-        self.title("Descargador de canciones")
+        self.title("LuthierMusic")
         self.geometry("780x640")
         self.minsize(680, 560)
         apply_window_icon(self)
@@ -52,7 +52,7 @@ class SongDownloaderApp(ctk.CTk):
 
         header = ctk.CTkLabel(
             self,
-            text="Descargador de canciones",
+            text="LuthierMusic",
             font=ctk.CTkFont(size=22, weight="bold"),
         )
         header.grid(row=0, column=0, padx=20, pady=(18, 8), sticky="w")

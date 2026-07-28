@@ -1,6 +1,6 @@
 
 
-# 🎵 Descargador de Canciones
+# 🎵 LuthierMusic
 
 ### App de escritorio para buscar y descargar música con estilo
 
@@ -20,7 +20,7 @@
 ## 💻 Descarga para Windows
 
 1. Ve a **[Releases](https://github.com/JUNSY8/Converter/releases/latest)**
-2. Descarga `DescargadorCanciones.exe`
+2. Descarga `LuthierMusic.exe`
 3. Ejecuta el `.exe` (doble clic)
 4. Acepta los **términos y condiciones** (solo la primera vez)
 
@@ -108,10 +108,10 @@ O manualmente:
 ```bash
 powershell -File scripts/fetch_ffmpeg.ps1
 pip install pyinstaller
-python -m PyInstaller --noconfirm --clean --onefile --windowed --name "DescargadorCanciones" --collect-all customtkinter --collect-all yt_dlp --add-binary "vendor\ffmpeg\ffmpeg.exe;ffmpeg" --add-binary "vendor\ffmpeg\ffprobe.exe;ffmpeg" app.py
+python -m PyInstaller --noconfirm --clean --onefile --windowed --name "LuthierMusic" --collect-all customtkinter --collect-all yt_dlp --add-binary "vendor\ffmpeg\ffmpeg.exe;ffmpeg" --add-binary "vendor\ffmpeg\ffprobe.exe;ffmpeg" app.py
 ```
 
-El ejecutable queda en `dist/DescargadorCanciones.exe` (con ffmpeg embebido).
+El ejecutable queda en `dist/LuthierMusic.exe` (con ffmpeg embebido).
 
 ---
 

@@ -11,7 +11,7 @@ from resources import apply_window_icon
 
 TERMS_TEXT = """TÉRMINOS Y CONDICIONES DE USO
 
-Al usar Descargador de Canciones usted acepta lo siguiente:
+Al usar LuthierMusic usted acepta lo siguiente:
 
 1. Uso responsable
    Esta aplicación es una herramienta técnica. Usted es el único
@@ -40,7 +40,7 @@ Al usar Descargador de Canciones usted acepta lo siguiente:
 
 def terms_accepted_path() -> Path:
     base = Path(os.environ.get("LOCALAPPDATA", str(Path.home() / "AppData" / "Local")))
-    return base / "DescargadorCanciones" / "terms_accepted.txt"
+    return base / "LuthierMusic" / "terms_accepted.txt"
 
 
 def has_accepted_terms() -> bool:
