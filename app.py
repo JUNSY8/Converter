@@ -15,6 +15,7 @@ from downloader import (
     ffmpeg_available,
     parse_song_list,
 )
+from resources import apply_window_icon
 from terms import prompt_terms_if_needed
 
 ctk.set_appearance_mode("System")
@@ -27,6 +28,7 @@ class SongDownloaderApp(ctk.CTk):
         self.title("Descargador de canciones")
         self.geometry("780x640")
         self.minsize(680, 560)
+        apply_window_icon(self)
 
         self.queue = DownloadQueue()
         self.output_dir = ctk.StringVar(value=str(Path.home() / "Downloads" / "Canciones"))

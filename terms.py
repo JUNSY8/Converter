@@ -7,6 +7,8 @@ from pathlib import Path
 
 import customtkinter as ctk
 
+from resources import apply_window_icon
+
 TERMS_TEXT = """TÉRMINOS Y CONDICIONES DE USO
 
 Al usar Descargador de Canciones usted acepta lo siguiente:
@@ -26,7 +28,7 @@ Al usar Descargador de Canciones usted acepta lo siguiente:
    términos de esos servicios.
 
 4. Sin garantías
-   El software se ofrece “tal cual”, sin garantías de disponibilidad,
+   El software se ofrece "tal cual", sin garantías de disponibilidad,
    exactitud o idoneidad. Los autores no responden por daños,
    pérdidas o usos indebidos derivados de la aplicación.
 
@@ -62,6 +64,7 @@ class TermsDialog(ctk.CTkToplevel):
         self.minsize(480, 400)
         self.resizable(True, True)
         self.accepted = False
+        apply_window_icon(self)
 
         self.transient(master)
         self.grab_set()
@@ -114,7 +117,7 @@ class TermsDialog(ctk.CTkToplevel):
             w = self.winfo_width()
             h = self.winfo_height()
             self.geometry(f"+{mx + (mw - w) // 2}+{my + (mh - h) // 2}")
-        except Exception:  # noqa: BLE001
+        except Exception:
             pass
 
     def _accept(self) -> None:
