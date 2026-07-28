@@ -6,8 +6,8 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
+[![Windows](https://img.shields.io/badge/Windows-.exe-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/JUNSY8/Converter/releases/latest)
 [![yt-dlp](https://img.shields.io/badge/Powered%20by-yt--dlp-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://github.com/yt-dlp/yt-dlp)
-[![UI](https://img.shields.io/badge/UI-CustomTkinter-0EA5E9?style=for-the-badge&logo=windowsterminal&logoColor=white)](https://github.com/TomSchimansky/CustomTkinter)
 
 **Busca por nombre y autor · Descarga en MP3 o MP4 · Elige la calidad**
 
@@ -19,6 +19,17 @@
 ![demo](https://img.shields.io/badge/🎲_Modo_aleatorio-10B981?style=flat-square)
 
 </div>
+
+---
+
+## 💻 Descarga para Windows
+
+1. Ve a [**Releases**](https://github.com/JUNSY8/Converter/releases/latest)
+2. Descarga **`DescargadorCanciones.exe`**
+3. Ten **ffmpeg** instalado y en el `PATH` (ver más abajo)
+4. Ejecuta el `.exe` (doble clic)
+
+> Windows puede mostrar un aviso de SmartScreen al ser un ejecutable no firmado: *Más información* → *Ejecutar de todas formas*.
 
 ---
 
@@ -39,7 +50,7 @@
 
 | Requisito | Detalle |
 |:----------|:--------|
-| 🐍 **Python** | 3.10 o superior |
+| 🪟 **Windows** | `.exe` listo (o Python 3.10+ si corres desde código) |
 | 🎬 **ffmpeg** | Debe estar en el `PATH` (conversión audio/video) |
 
 <details>
@@ -67,22 +78,28 @@ ffmpeg -version
 
 ---
 
-## 🚀 Instalación
+## 🚀 Instalación desde código
 
 ```bash
 cd convert
 pip install -r requirements.txt
+python app.py
 ```
 
 Dependencias principales: `customtkinter` · `yt-dlp`
 
+### Empaquetar el `.exe` (desarrolladores)
+
+```bash
+pip install pyinstaller
+python -m PyInstaller --noconfirm --clean --onefile --windowed --name "DescargadorCanciones" --collect-all customtkinter --collect-all yt_dlp app.py
+```
+
+El ejecutable queda en `dist/DescargadorCanciones.exe`.
+
 ---
 
 ## ▶️ Uso
-
-```bash
-python app.py
-```
 
 1. Escribe o pega la lista (una canción por línea), por ejemplo:
    - `Bohemian Rhapsody - Queen`
