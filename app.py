@@ -15,6 +15,7 @@ from downloader import (
     ffmpeg_available,
     parse_song_list,
 )
+from terms import prompt_terms_if_needed
 
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
@@ -154,10 +155,11 @@ class SongDownloaderApp(ctk.CTk):
     def _check_ffmpeg(self) -> None:
         if not ffmpeg_available():
             self._append_log(
-                "AVISO: ffmpeg no está en el PATH. Instálalo y reinicia la app "
-                "(ver README.md)."
+                "AVISO: no se encontró ffmpeg embebido ni en el PATH."
             )
             self.status_text.set("ffmpeg no encontrado")
+        else:
+            self._append_log("ffmpeg listo.")
 
     def _on_format_change(self, _value: str) -> None:
         self._update_quality_options()
@@ -228,8 +230,10 @@ class SongDownloaderApp(ctk.CTk):
         if not ffmpeg_available():
             messagebox.showerror(
                 "ffmpeg requerido",
-                "No se encontró ffmpeg en el PATH.\n"
-                "Instálalo (por ejemplo: winget install ffmpeg) y reinicia la app.",
+                "No se encontró ffmpeg.\n"
+                "En la versión .exe debería venir incluido. "
+                "Si ejecutas desde código, coloca ffmpeg en vendor/ffmpeg "
+                "o instálalo en el PATH.",
             )
             return
 
@@ -336,6 +340,11 @@ class SongDownloaderApp(ctk.CTk):
 
 def main() -> None:
     app = SongDownloaderApp()
+    app.withdraw()
+    if not prompt_terms_if_needed(app):
+        app.destroy()
+        return
+    app.deiconify()
     app.mainloop()
 
 
