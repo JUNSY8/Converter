@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 import shutil
+import sys
 import threading
 from dataclasses import dataclass
 from pathlib import Path
@@ -13,6 +14,36 @@ import yt_dlp
 
 ProgressCallback = Callable[[str], None]
 ItemDoneCallback = Callable[[int, int, str, bool, str], None]
+
+
+def _app_base_dir() -> Path:
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        return Path(sys._MEIPASS)  # type: ignore[attr-defined]
+    return Path(__file__).resolve().parent
+
+
+def resolve_ffmpeg_dir() -> Path | None:
+    """Return directory that contains ffmpeg.exe (bundled or on PATH)."""
+    candidates = [
+        _app_base_dir() / "ffmpeg",
+        _app_base_dir() / "vendor" / "ffmpeg",
+        Path(__file__).resolve().parent / "vendor" / "ffmpeg",
+    ]
+    if getattr(sys, "frozen", False):
+        candidates.insert(0, Path(sys.executable).resolve().parent / "ffmpeg")
+
+    for folder in candidates:
+        if (folder / "ffmpeg.exe").is_file() or (folder / "ffmpeg").is_file():
+            return folder
+
+    which = shutil.which("ffmpeg")
+    if which:
+        return Path(which).resolve().parent
+    return None
+
+
+def ffmpeg_available() -> bool:
+    return resolve_ffmpeg_dir() is not None
 
 
 @dataclass(frozen=True)
@@ -34,10 +65,6 @@ class SongQuery:
 
 AUDIO_QUALITIES = ("128", "192", "320")
 VIDEO_QUALITIES = ("360", "720", "1080")
-
-
-def ffmpeg_available() -> bool:
-    return shutil.which("ffmpeg") is not None
 
 
 def sanitize_filename(name: str) -> str:
@@ -85,6 +112,10 @@ def _build_ydl_opts(
         "windowsfilenames": True,
         "overwrites": True,
     }
+
+    ffmpeg_dir = resolve_ffmpeg_dir()
+    if ffmpeg_dir is not None:
+        opts["ffmpeg_location"] = str(ffmpeg_dir)
 
     if progress_hook is not None:
         opts["progress_hooks"] = [progress_hook]
