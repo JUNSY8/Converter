@@ -1,110 +1,128 @@
-<div align="center">
+
 
 # 🎵 Descargador de Canciones
 
 ### App de escritorio para buscar y descargar música con estilo
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
-[![Windows](https://img.shields.io/badge/Windows-.exe-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/JUNSY8/Converter/releases/latest)
-[![yt-dlp](https://img.shields.io/badge/Powered%20by-yt--dlp-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://github.com/yt-dlp/yt-dlp)
+[Python](https://www.python.org/)
+[License](LICENSE)
+[Windows](https://github.com/JUNSY8/Converter/releases/latest)
+[yt-dlp](https://github.com/yt-dlp/yt-dlp)
 
 **Busca por nombre y autor · Descarga en MP3 o MP4 · Elige la calidad**
 
-<br/>
 
-![demo](https://img.shields.io/badge/✨_Lista_inteligente-8B5CF6?style=flat-square)
-![demo](https://img.shields.io/badge/🎧_MP3_&_MP4-EC4899?style=flat-square)
-![demo](https://img.shields.io/badge/🎚️_Calidad_ajustable-F59E0B?style=flat-square)
-![demo](https://img.shields.io/badge/🎲_Modo_aleatorio-10B981?style=flat-square)
-
-</div>
 
 ---
 
+
+
 ## 💻 Descarga para Windows
 
-1. Ve a [**Releases**](https://github.com/JUNSY8/Converter/releases/latest)
-2. Descarga **`DescargadorCanciones.exe`**
-3. Ten **ffmpeg** instalado y en el `PATH` (ver más abajo)
-4. Ejecuta el `.exe` (doble clic)
+1. Ve a **[Releases](https://github.com/JUNSY8/Converter/releases/latest)**
+2. Descarga `DescargadorCanciones.exe`
+3. Ejecuta el `.exe` (doble clic)
+4. Acepta los **términos y condiciones** (solo la primera vez)
+
+**No necesitas instalar nada más**: el `.exe` ya incluye **ffmpeg** embebido.
 
 > Windows puede mostrar un aviso de SmartScreen al ser un ejecutable no firmado: *Más información* → *Ejecutar de todas formas*.
 
 ---
 
+
+
 ## ✨ Características
 
-| | |
-|:--|:--|
-| 🔍 **Búsqueda flexible** | Título + autor, o solo el título — una canción por línea |
-| 🎧 **Formatos** | Exporta a **MP3** (audio) o **MP4** (video) |
-| 🎚️ **Calidad** | Elige bitrate / resolución según el formato |
-| 🎲 **Modo aleatorio** | Descarga la cola en orden mezclado |
-| 📁 **Carpeta a tu gusto** | Elige dónde guardar; nombres `Autor - Título.ext` |
-| 🛡️ **Cola robusta** | Si una pista falla, el resto sigue descargándose |
+
+|                           |                                                          |
+| ------------------------- | -------------------------------------------------------- |
+| 🔍 **Búsqueda flexible**  | Título + autor, o solo el título — una canción por línea |
+| 🎧 **Formatos**           | Exporta a **MP3** (audio) o **MP4** (video)              |
+| 🎚️ **Calidad**           | Elige bitrate / resolución según el formato              |
+| 🎲 **Modo aleatorio**     | Descarga la cola en orden mezclado                       |
+| 📁 **Carpeta a tu gusto** | Elige dónde guardar; nombres `Autor - Título.ext`        |
+| 🛡️ **Cola robusta**      | Si una pista falla, el resto sigue descargándose         |
+| 🎬 **ffmpeg incluido**    | En el `.exe` no hace falta instalarlo por separado       |
+
 
 ---
 
+
+
 ## 🧰 Requisitos
 
-| Requisito | Detalle |
-|:----------|:--------|
-| 🪟 **Windows** | `.exe` listo (o Python 3.10+ si corres desde código) |
-| 🎬 **ffmpeg** | Debe estar en el `PATH` (conversión audio/video) |
+
+| Requisito      | Detalle                                                                 |
+| -------------- | ----------------------------------------------------------------------- |
+| 🪟 **Windows** | Descarga el `.exe` y úsalo tal cual (ffmpeg ya va dentro)               |
+| 🐍 **Código**  | Si corres desde fuente: Python 3.10+ y ffmpeg en `vendor/ffmpeg` o PATH |
+
 
 <details>
-<summary><b>📦 Instalar ffmpeg en Windows</b></summary>
+<summary><b>📦 ffmpeg solo si ejecutas desde código</b></summary>
 
 <br/>
 
-**Opción A — winget**
+Con el `.exe` de Releases **no aplica**. Si desarrollas o corres `python app.py`:
+
+**Opción A — vendor local (recomendado para empaquetar)**
+
+```bash
+powershell -File scripts/fetch_ffmpeg.ps1
+```
+
+Queda en `vendor/ffmpeg/` (`ffmpeg.exe` + `ffprobe.exe`).
+
+**Opción B — winget (PATH del sistema)**
 
 ```bash
 winget install ffmpeg
-```
-
-**Opción B — manual**
-
-1. Descarga desde [ffmpeg.org](https://ffmpeg.org/download.html)
-2. Agrega la carpeta `bin` al `PATH`
-3. Reinicia la terminal y verifica:
-
-```bash
-ffmpeg -version
 ```
 
 </details>
 
 ---
 
+
+
 ## 🚀 Instalación desde código
 
 ```bash
 cd convert
 pip install -r requirements.txt
+powershell -File scripts/fetch_ffmpeg.ps1
 python app.py
 ```
 
-Dependencias principales: `customtkinter` · `yt-dlp`
+Dependencias principales: `customtkinter` · `yt-dlp` · ffmpeg (vendor o PATH)
 
 ### Empaquetar el `.exe` (desarrolladores)
 
 ```bash
-pip install pyinstaller
-python -m PyInstaller --noconfirm --clean --onefile --windowed --name "DescargadorCanciones" --collect-all customtkinter --collect-all yt_dlp app.py
+build_windows.bat
 ```
 
-El ejecutable queda en `dist/DescargadorCanciones.exe`.
+O manualmente:
+
+```bash
+powershell -File scripts/fetch_ffmpeg.ps1
+pip install pyinstaller
+python -m PyInstaller --noconfirm --clean --onefile --windowed --name "DescargadorCanciones" --collect-all customtkinter --collect-all yt_dlp --add-binary "vendor\ffmpeg\ffmpeg.exe;ffmpeg" --add-binary "vendor\ffmpeg\ffprobe.exe;ffmpeg" app.py
+```
+
+El ejecutable queda en `dist/DescargadorCanciones.exe` (con ffmpeg embebido).
 
 ---
+
+
 
 ## ▶️ Uso
 
 1. Escribe o pega la lista (una canción por línea), por ejemplo:
-   - `Bohemian Rhapsody - Queen`
-   - `Blinding Lights, The Weeknd`
-   - `Imagine` *(solo título)*
+  - `Bohemian Rhapsody - Queen`
+  - `Blinding Lights, The Weeknd`
+  - `Imagine` *(solo título)*
 2. Elige formato (**MP3** o **MP4**) y calidad.
 3. *(Opcional)* Activa **Aleatorio** para mezclar el orden.
 4. Selecciona la carpeta de destino.
@@ -114,12 +132,17 @@ El ejecutable queda en `dist/DescargadorCanciones.exe`.
 
 ---
 
+
+
 ## ⚖️ Aviso legal
 
 La búsqueda se realiza mediante YouTube con **yt-dlp**.  
+Al abrir la app debes aceptar los términos y condiciones.  
 Usa esta app **solo** con contenido al que tengas derecho a descargar.
 
 ---
+
+
 
 ## 📄 Licencia
 
@@ -129,12 +152,7 @@ Este proyecto se distribuye bajo la licencia **[MIT](LICENSE)**.
 Copyright (c) 2026 JUNSY8
 ```
 
-Libre de usar, modificar y distribuir — consulta el archivo [`LICENSE`](LICENSE) para el texto completo.
+Libre de usar, modificar y distribuir — consulta el archivo `[LICENSE](LICENSE)` para el texto completo.
 
 ---
 
-<div align="center">
-
-**Hecho con 💜 · Python · CustomTkinter · yt-dlp**
-
-</div>
